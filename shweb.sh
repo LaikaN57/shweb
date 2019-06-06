@@ -1,4 +1,6 @@
 #!/bin/bash
-exec 4<>/dev/tcp/$1/80
-echo -e "GET /$2 HTTP/1.1\r\nhost: $1\r\nConnection: close\r\n\r\n" >&4
+$host=$1
+$path=${$2:-/}
+exec 4<>/dev/tcp/$host/80
+echo -e "GET $path HTTP/1.1\r\nhost: $host\r\nConnection: close\r\n\r\n" >&4
 cat <&4
